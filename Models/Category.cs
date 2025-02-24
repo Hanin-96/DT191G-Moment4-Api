@@ -7,6 +7,6 @@
         public string? CategoryName { get; set; }
 
         //Koppla category med soundtrack
-        public List<Soundtrack>? Soundtrack { get; set; }
+        //public List<Soundtrack>? Soundtrack { get; set; }
     }
 }
