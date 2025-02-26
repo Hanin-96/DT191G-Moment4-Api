@@ -29,7 +29,7 @@ namespace Music_Api.Controllers
             //Hämtar kategori för alla låtar
             foreach(var soundtrack in soundtracks)
             {
-                Category category = _context.Category.Find(soundtrack.CategoryId);
+                Category? category = _context.Category.Find(soundtrack.CategoryId);
                 soundtrack.Category = category;
             }
             return soundtracks;
@@ -43,8 +43,11 @@ namespace Music_Api.Controllers
             var soundtrack = await _context.Soundtrack.FindAsync(id);
 
             //Hämtar kategori för specifik låt
-            Category category = _context.Category.Find(soundtrack.CategoryId);
-            soundtrack.Category = category;
+            Category? category = _context.Category.Find(soundtrack?.CategoryId);
+            if(soundtrack != null)
+            {
+                soundtrack.Category = category;
+            }
 
             if (soundtrack == null)
             {
@@ -94,7 +97,7 @@ namespace Music_Api.Controllers
             await _context.SaveChangesAsync();
 
             //Hämtar kategori för låt
-            Category category = _context.Category.Find(soundtrack.CategoryId);
+            Category? category = _context.Category.Find(soundtrack.CategoryId);
             soundtrack.Category = category;
             return CreatedAtAction("GetSoundtrack", new { id = soundtrack.SoundtrackId }, soundtrack);
         }
